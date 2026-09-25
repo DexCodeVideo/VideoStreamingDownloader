@@ -38,21 +38,27 @@ namespace VideoStreamingDownloader.ETB
             try
             {
                 _id = GetId(url);
-                if (!await IsValidEpisode(_id))
-                    throw new Exception("");
-                _mediaType = MediaTypeCodes.Single;
-                score++;
+                if (!string.IsNullOrEmpty(_id))
+                {
+                    if (!await IsValidEpisode(_id))
+                        throw new Exception("");
+                    _mediaType = MediaTypeCodes.Single;
+                    score++;
+                }
             }
             catch { }
             try
             {
                 _id = await GetProgramId(url);
-                _mediaType = MediaTypeCodes.Multiple;
-                score++;
+                if (!string.IsNullOrEmpty(_id))
+                {
+                    _mediaType = MediaTypeCodes.Multiple;
+                    score++;
+                }
             }
             catch { }
 
-            return score;
+            return _mediaType == MediaTypeCodes.None ? 0 : score;
         }
 
         private async Task<bool> IsValidEpisode(string id)

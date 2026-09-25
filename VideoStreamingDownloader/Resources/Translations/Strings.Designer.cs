@@ -106,6 +106,15 @@ namespace VideoStreamingDownloader.Resources.Translations {
         }
         
         /// <summary>
+        ///   Busca una cadena traducida similar a Confirm.
+        /// </summary>
+        internal static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Busca una cadena traducida similar a Decripting.
         /// </summary>
         internal static string Decripting {
@@ -165,6 +174,15 @@ namespace VideoStreamingDownloader.Resources.Translations {
         internal static string eus {
             get {
                 return ResourceManager.GetString("eus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Filter.
+        /// </summary>
+        internal static string Filter {
+            get {
+                return ResourceManager.GetString("Filter", resourceCulture);
             }
         }
         
@@ -300,6 +318,15 @@ namespace VideoStreamingDownloader.Resources.Translations {
         internal static string Search {
             get {
                 return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Select all.
+        /// </summary>
+        internal static string Select_All {
+            get {
+                return ResourceManager.GetString("Select_All", resourceCulture);
             }
         }
         

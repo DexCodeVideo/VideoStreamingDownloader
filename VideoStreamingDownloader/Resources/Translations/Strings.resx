@@ -225,4 +225,13 @@
   <data name="Selected" xml:space="preserve">
     <value>Selected</value>
   </data>
+  <data name="Filter" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Select_All" xml:space="preserve">
+    <value>Select all</value>
+  </data>
 </root>

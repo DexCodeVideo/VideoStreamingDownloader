@@ -54,7 +54,7 @@ namespace VideoStreamingDownloader._3CAT
             }
             catch { }
 
-            return score;
+            return _mediaType == MediaTypeCodes.None ? 0 : score;
         }
 
         private int GetIdFromUrl(string url)

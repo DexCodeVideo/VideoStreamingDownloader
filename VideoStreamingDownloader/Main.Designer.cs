@@ -57,7 +57,7 @@
             this.InputUrl.Location = new System.Drawing.Point(0, 0);
             this.InputUrl.Margin = new System.Windows.Forms.Padding(0);
             this.InputUrl.Name = "InputUrl";
-            this.InputUrl.Size = new System.Drawing.Size(1308, 36);
+            this.InputUrl.Size = new System.Drawing.Size(1317, 36);
             this.InputUrl.TabIndex = 0;
             this.InputUrl.Text = "Enllaç aquí";
             // 
@@ -67,10 +67,10 @@
             this.Search.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.Search.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Search.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Search.Location = new System.Drawing.Point(1318, 0);
+            this.Search.Location = new System.Drawing.Point(1327, 0);
             this.Search.Margin = new System.Windows.Forms.Padding(0);
             this.Search.Name = "Search";
-            this.Search.Size = new System.Drawing.Size(120, 38);
+            this.Search.Size = new System.Drawing.Size(120, 39);
             this.Search.TabIndex = 1;
             this.Search.Text = "Buscar";
             this.Search.UseVisualStyleBackColor = true;
@@ -97,7 +97,7 @@
             this.progressBar.Location = new System.Drawing.Point(0, 40);
             this.progressBar.Margin = new System.Windows.Forms.Padding(0);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(1248, 41);
+            this.progressBar.Size = new System.Drawing.Size(1257, 41);
             this.progressBar.TabIndex = 3;
             // 
             // tableLayoutPanel2
@@ -113,7 +113,7 @@
             this.tableLayoutPanel2.RowCount = 2;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(1248, 81);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(1257, 81);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // ProgressLabel
@@ -124,7 +124,7 @@
             this.ProgressLabel.Location = new System.Drawing.Point(0, 0);
             this.ProgressLabel.Margin = new System.Windows.Forms.Padding(0);
             this.ProgressLabel.Name = "ProgressLabel";
-            this.ProgressLabel.Size = new System.Drawing.Size(1248, 40);
+            this.ProgressLabel.Size = new System.Drawing.Size(1257, 40);
             this.ProgressLabel.TabIndex = 4;
             this.ProgressLabel.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
@@ -137,7 +137,7 @@
             this.DownloaderViewerToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1462, 36);
+            this.menuStrip1.Size = new System.Drawing.Size(1471, 36);
             this.menuStrip1.TabIndex = 8;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -173,7 +173,7 @@
             this.tableLayoutPanel3.RowCount = 1;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(1438, 38);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(1447, 39);
             this.tableLayoutPanel3.TabIndex = 9;
             // 
             // tableLayoutPanel4
@@ -190,7 +190,7 @@
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(1438, 81);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(1447, 81);
             this.tableLayoutPanel4.TabIndex = 10;
             // 
             // tableLayoutPanel5
@@ -199,7 +199,7 @@
             this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.Controls.Add(this.DownloadButton, 0, 1);
             this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(1258, 0);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(1267, 0);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(0);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
             this.tableLayoutPanel5.RowCount = 2;
@@ -213,9 +213,9 @@
             this.MainPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.MainPanel.Location = new System.Drawing.Point(12, 83);
+            this.MainPanel.Location = new System.Drawing.Point(12, 84);
             this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Size = new System.Drawing.Size(1248, 546);
+            this.MainPanel.Size = new System.Drawing.Size(1257, 545);
             this.MainPanel.TabIndex = 12;
             this.MainPanel.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.MainPanel_ControlRemoved);
             // 
@@ -223,7 +223,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(1462, 762);
+            this.ClientSize = new System.Drawing.Size(1471, 762);
             this.Controls.Add(this.MainPanel);
             this.Controls.Add(this.tableLayoutPanel4);
             this.Controls.Add(this.tableLayoutPanel3);

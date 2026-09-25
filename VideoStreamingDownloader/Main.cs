@@ -72,13 +72,17 @@ namespace VideoStreamingDownloader
 
         private async Task SearchAction()
         {
+            InputUrl.Enabled = false;
             Search.Enabled = false;
             _streamingDownloader = await IdentifyProvider(InputUrl.Text);
+
             if (_streamingDownloader == null)
-                setMainPanel(new IdentificationFailed());
+                setMainPanel(new IdentificationFailed(InputUrl.Text));
             else
                 setMainPanel(_streamingDownloader.ShowForm());
+
             Search.Enabled = true;
+            InputUrl.Enabled = true;
         }
 
         private async Task<IStreamingIdentificator> IdentifyProvider(string url)

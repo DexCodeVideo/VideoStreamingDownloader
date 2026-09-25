@@ -10,7 +10,6 @@ namespace VideoStreamingDownloader.Common.EpisodeSelector
         private Items _items;
         internal HashSet<string> CheckedIds { get; private set; } = new HashSet<string>();
 
-
         internal Main(Items items)
         {
             InitializeComponent();
@@ -19,6 +18,14 @@ namespace VideoStreamingDownloader.Common.EpisodeSelector
             {
                 CheckedIds.Add(item.Id);
             }
+            SetLabels();
+        }
+
+        private void SetLabels()
+        {
+            SeleccionaCkb.Text = Resources.Translations.Strings.Select_All;
+            SaveButton.Text = $"{Resources.Translations.Strings.Confirm} {Resources.Translations.Strings.Selected}";
+            FilterLabel.Text = Resources.Translations.Strings.Filter;
         }
 
         private void EpisodeSelectorForm_Load(object sender, System.EventArgs e)
@@ -53,12 +60,12 @@ namespace VideoStreamingDownloader.Common.EpisodeSelector
             if (expand)
                 EpisodesTree.ExpandAll();
 
-            SetLabel();
+            SetSelectedLabel();
         }
 
-        private void SetLabel()
+        private void SetSelectedLabel()
         {
-            SelectedLabel.Text = $"Seleccionats: {CheckedIds.Count}/{_items.Count}";
+            SelectedLabel.Text = $"{Resources.Translations.Strings.Selected}: {CheckedIds.Count}/{_items.Count}";
         }
 
         private void EpisodesTree_AfterCheck(object sender, TreeViewEventArgs e)
@@ -75,7 +82,7 @@ namespace VideoStreamingDownloader.Common.EpisodeSelector
 
             this.EpisodesTree.AfterCheck += new TreeViewEventHandler(this.EpisodesTree_AfterCheck);
 
-            SetLabel();
+            SetSelectedLabel();
         }
 
         private void SetNodeState(TreeNode node, bool state)
@@ -110,14 +117,14 @@ namespace VideoStreamingDownloader.Common.EpisodeSelector
             }
             this.EpisodesTree.AfterCheck += new TreeViewEventHandler(this.EpisodesTree_AfterCheck);
 
-            SetLabel();
+            SetSelectedLabel();
         }
 
         private void FilterTextBox_TextChanged(object sender, System.EventArgs e)
         {
-            if (FilterTextBox.Text.Length >= 3)
+            if (FilterTextBox.Text.Length > 0)
                 BuildTree(FilterTextBox.Text, true, false);
-            else if (FilterTextBox.Text.Length == 0)
+            else
                 BuildTree(FilterTextBox.Text, false);
         }
     }

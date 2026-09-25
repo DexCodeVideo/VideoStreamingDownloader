@@ -45,7 +45,7 @@ namespace VideoStreamingDownloader.RTVE
             }
             catch { }
 
-            return score;
+            return _mediaType == MediaTypeCodes.None ? 0 : score;
         }
 
         private async Task<bool> IsValidEpisode(int code)
