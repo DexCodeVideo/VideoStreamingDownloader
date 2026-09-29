@@ -44,13 +44,15 @@ namespace VideoStreamingDownloader.Common.Downloads
             }
         }
 
-        protected async Task<string> DirectDownload(string url, string folder)
+        protected async Task<string> DirectDownload(string url, string folder, bool showProgress = true)
         {
             string path = $"{folder}\\{Guid.NewGuid()}.mp4";
 
             using (WebClient web = new WebClient())
             {
-                web.DownloadProgressChanged += (s, e) => { Status.SetProgressValue(e.ProgressPercentage); };
+                if (showProgress)
+                    web.DownloadProgressChanged += (s, e) => { Status.SetProgressValue(e.ProgressPercentage); };
+
                 await web.DownloadFileTaskAsync(url, path);
             }
 

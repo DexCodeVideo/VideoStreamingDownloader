@@ -113,7 +113,7 @@ namespace VideoStreamingDownloader.ETB
             var widevineUrl = await GetWidevineUrl(_id);
             if (string.IsNullOrEmpty(widevineUrl))
                 Program.LoggerService.LogError("Token failed");
-            return Utils.ObtainDecryptiontKey(BaseUrl + widevineUrl, video.Pssh);
+            return await Utils.ObtainDecryptiontKey(BaseUrl + widevineUrl, video.Pssh);
         }
 
         private async Task<string> GetWidevineUrl(string id)

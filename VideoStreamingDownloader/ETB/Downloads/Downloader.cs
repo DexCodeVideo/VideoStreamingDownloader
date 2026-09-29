@@ -23,7 +23,7 @@ namespace VideoStreamingDownloader.ETB.Downloads
 
         private static int CalculateMaxStatusValue(Item downloadOptions)
         {
-            return downloadOptions.FileInfo.Duration / 6 + 10;
+            return downloadOptions.FileInfo.Duration / 6 + 5;
         }
 
         private void LogInformation(string message)
@@ -46,7 +46,7 @@ namespace VideoStreamingDownloader.ETB.Downloads
                 var results = await DownloadTracks(video, audios, subtitles, folder);
                 var dKey = await GetDecryptionKey(video);
                 await DecryptResults(results, dKey);
-                MergeFile(results, filename);
+                await MergeFile(results, filename);
             }
             catch (Exception ex)
             {
@@ -75,16 +75,16 @@ namespace VideoStreamingDownloader.ETB.Downloads
             Status.SetMessage(Resources.Translations.Strings.Decripting);
             LogInformation("Results decryption started");
             var resultsToDecrypt = results.Where(result => result.Metadata.GetType() != typeof(SubtitleMetada));
-            await Task.WhenAll(resultsToDecrypt.Select(result => Task.Run(() => Utils.DecryptFile(result.Path, decryptKey))));
+            await Task.WhenAll(resultsToDecrypt.Select(result => Utils.DecryptFile(result.Path, decryptKey)));
             Status.Itereate();
             LogInformation("Results decryption completed");
         }
 
-        private void MergeFile(Results results, string filename)
+        private async Task MergeFile(Results results, string filename)
         {
             Status.SetMessage(Resources.Translations.Strings.Merging_files);
             LogInformation("Merging started");
-            Common.Downloads.Utils.MergeFile(results, filename);
+            await Utils.MergeFile(results, filename);
             LogInformation("Merging completed");
         }
 
@@ -102,7 +102,7 @@ namespace VideoStreamingDownloader.ETB.Downloads
 
         internal async Task<Result<IMetadata>> SubtitleDownloadTask(Track.Subtitle subtitle, string baseDownloadPath)
         {
-            string path = await DirectDownload(subtitle.DirectLink, baseDownloadPath);
+            string path = await DirectDownload(subtitle.DirectLink, baseDownloadPath, false);
             return new Result<IMetadata>(new SubtitleMetada(subtitle.Language.IsoCode), path);
         }
 

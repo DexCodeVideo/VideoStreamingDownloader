@@ -84,7 +84,7 @@ namespace VideoStreamingDownloader.RTVE
             var widevineUrl = await GetWidevineUrl(_id);
             if (string.IsNullOrEmpty(widevineUrl))
                 Program.LoggerService.LogError("Token failed");
-            return Utils.ObtainDecryptiontKey(widevineUrl, video.Pssh);
+            return await Utils.ObtainDecryptiontKey(widevineUrl, video.Pssh);
         }
 
         private async Task<string> GetWidevineUrl(int episodeCode)

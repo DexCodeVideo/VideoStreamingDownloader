@@ -102,7 +102,8 @@ namespace VideoStreamingDownloader.ETB
 
             foreach (var episode in _mediaOptions.FileInfos)
             {
-                items.Add(new Item(video, audios, subtitles, episode));
+                if(_episodeSelector.CheckedIds.Contains(episode.Id))
+                    items.Add(new Item(video, audios, subtitles, episode));
             }
 
             return items;

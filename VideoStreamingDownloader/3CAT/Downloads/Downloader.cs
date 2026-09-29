@@ -49,7 +49,7 @@ namespace VideoStreamingDownloader._3CAT.Downloads
             {
                 var (video, audios, subtitles) = await GetMediaOptions();
                 var results = await DownloadTracks(video, audios, subtitles, folder);
-                MergeFile(results, filename);
+                await MergeFile(results, filename);
             }
             catch (Exception ex)
             {
@@ -63,11 +63,11 @@ namespace VideoStreamingDownloader._3CAT.Downloads
             }
         }
 
-        private void MergeFile(Results results, string filename)
+        private async Task MergeFile(Results results, string filename)
         {
             Status.SetMessage(Resources.Translations.Strings.Merging_files);
             LogInformation("Merging started");
-            Common.Downloads.Utils.MergeFile(results, filename);
+            await Utils.MergeFile(results, filename);
             LogInformation("Merging completed");
         }
 
@@ -91,7 +91,7 @@ namespace VideoStreamingDownloader._3CAT.Downloads
             if (audio.DirectLink == string.Empty)
                 path = await DownloadParts(audio.Urls, baseDownloadPath, showProgress);
             else
-                path = await DirectDownload(audio.DirectLink, baseDownloadPath);
+                path = await DirectDownload(audio.DirectLink, baseDownloadPath, showProgress);
 
             return new Result<IMetadata>(new AudioMetada(audio.Language.IsoCode), path);
         }

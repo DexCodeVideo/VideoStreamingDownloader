@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace VideoStreamingDownloader.Common.Downloads
 {
@@ -37,12 +38,12 @@ namespace VideoStreamingDownloader.Common.Downloads
                 Directory.CreateDirectory(folder);
         }
 
-        internal static void DecryptFile(string filepath, string decryptKey)
+        internal static async Task DecryptFile(string filepath, string decryptKey)
         {
             string tempFile = Path.GetDirectoryName(filepath) + $"\\{Guid.NewGuid()}.mp4";
             var command = $"--key {decryptKey} \"{filepath}\" \"{tempFile}\"";
 
-            RunProcess(_decryptFile, command);
+            await RunProcess(_decryptFile, command);
 
             File.Delete(filepath);
             File.Move(tempFile, filepath);
@@ -57,13 +58,13 @@ namespace VideoStreamingDownloader.Common.Downloads
             return destination;
         }
 
-        internal static void MergeFile(Results results, string destinationPath)
+        internal static async Task MergeFile(Results results, string destinationPath)
         {
             string command = BuildFfmpegCommand(results, destinationPath);
 
             try
             {
-                RunProcess(_ffmpegFile, command);
+                await RunProcess(_ffmpegFile, command);
             }
             catch (Exception ex)
             {
@@ -133,7 +134,7 @@ namespace VideoStreamingDownloader.Common.Downloads
             return sb.ToString();
         }
 
-        internal static string ObtainDecryptiontKey(string url, string pssh)
+        internal static async Task<string> ObtainDecryptiontKey(string url, string pssh)
         {
             string wvdFile = Directory.GetFiles(_CDMsFolder).FirstOrDefault();
 
@@ -141,7 +142,7 @@ namespace VideoStreamingDownloader.Common.Downloads
                 throw new Exception("Missing wvd file!");
 
             var command = $"-wvd \"{wvdFile}\" -pssh {pssh} -lic_url {url}";
-            string output = RunProcess(_l3KeyExtractFile, command);
+            string output =  await RunProcess(_l3KeyExtractFile, command);
 
             var match = Regex.Match(output, "\"([^\"]*)\"");
             if (!match.Success || match.Groups.Count < 2)
@@ -149,9 +150,10 @@ namespace VideoStreamingDownloader.Common.Downloads
             return match.Groups[1].Value;
         }
 
-        private static string RunProcess(string file, string command)
+        private static async Task<string> RunProcess(string file, string command)
         {
-            string output = "";
+            var output = new StringBuilder();
+            var error = new StringBuilder();
 
             using (Process p = new Process())
             {
@@ -162,14 +164,27 @@ namespace VideoStreamingDownloader.Common.Downloads
                 p.StartInfo.FileName = file;
                 p.StartInfo.Arguments = command;
 
-                p.Start();
-                p.WaitForExit();
+                p.OutputDataReceived += (sender, e) =>
+                {
+                    if (e.Data != null)
+                        output.AppendLine(e.Data);
+                };
 
-                output = p.StandardOutput.ReadToEnd();
+                p.ErrorDataReceived += (sender, e) =>
+                {
+                    if (e.Data != null)
+                        error.AppendLine(e.Data);
+                };
+
+                p.Start();
+
+                p.BeginOutputReadLine();
+                p.BeginErrorReadLine();
+
+                p.WaitForExit();
 
                 if (p.ExitCode != 0)
                 {
-                    string error = p.StandardError.ReadToEnd();
                     throw new Exception(
                         $"Process {file} failed with exit code {p.ExitCode}.\n\n" +
                         $"Command: {command}\n\n" +
@@ -177,7 +192,7 @@ namespace VideoStreamingDownloader.Common.Downloads
                 }
             }
 
-            return output;
+            return output.ToString();
         }
     }
 }

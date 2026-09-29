@@ -33,12 +33,12 @@ namespace VideoStreamingDownloader.RTVE.Downloads
 
         internal override async Task Download()
         {
-            string filename = Common.Downloads.Utils.CreateFilename(_downloadOptions.DestinationPath, _downloadOptions.FileInfo.Title);
+            string filename = Utils.CreateFilename(_downloadOptions.DestinationPath, _downloadOptions.FileInfo.Title);
             if (File.Exists(filename))
                 return;
 
-            string folder = Common.Downloads.Utils.GetTempFolder(OriginDescription, _downloadOptions.FileInfo.Id);
-            Common.Downloads.Utils.CreateDirectory(folder);
+            string folder = Utils.GetTempFolder(OriginDescription, _downloadOptions.FileInfo.Id);
+            Utils.CreateDirectory(folder);
 
             try
             {
@@ -46,7 +46,7 @@ namespace VideoStreamingDownloader.RTVE.Downloads
                 var results = await DownloadTracks(video, audios, subtitles, folder);
                 var dKey = await GetDecryptionKey(video);
                 await DecryptResults(results, dKey);
-                MergeFile(results, filename);
+                await MergeFile(results, filename);
             }
             catch (Exception ex)
             {
@@ -75,16 +75,16 @@ namespace VideoStreamingDownloader.RTVE.Downloads
             Status.SetMessage(Resources.Translations.Strings.Decripting);
             LogInformation("Results decryption started");
             var resultsToDecrypt = results.Where(result => result.Metadata.GetType() != typeof(SubtitleMetada));
-            await Task.WhenAll(resultsToDecrypt.Select(result => Task.Run(() => Utils.DecryptFile(result.Path, decryptKey))));
+            await Task.WhenAll(resultsToDecrypt.Select(result => Utils.DecryptFile(result.Path, decryptKey)));
             Status.Itereate();
             LogInformation("Results decryption completed");
         }
 
-        private void MergeFile(Results results, string filename)
+        private async Task MergeFile(Results results, string filename)
         {
             Status.SetMessage(Resources.Translations.Strings.Merging_files);
             LogInformation("Merging started");
-            Common.Downloads.Utils.MergeFile(results, filename);
+            await Utils.MergeFile(results, filename);
             LogInformation("Merging completed");
         }
 
@@ -103,7 +103,7 @@ namespace VideoStreamingDownloader.RTVE.Downloads
         internal async Task<Result<IMetadata>> SubtitleDownloadTask(Track.Subtitle subtitle, string baseDownloadPath)
         {
             string tempPath = await DownloadParts(subtitle.Urls, baseDownloadPath, false);
-            string path = Common.Downloads.Utils.ExtractVtt(tempPath);
+            string path = Utils.ExtractVtt(tempPath);
             return new Result<IMetadata>(new SubtitleMetada(subtitle.Language.IsoCode), path);
         }
 
