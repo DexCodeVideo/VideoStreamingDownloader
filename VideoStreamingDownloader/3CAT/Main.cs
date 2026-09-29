@@ -58,7 +58,10 @@ namespace VideoStreamingDownloader._3CAT
             Select.Enabled = _mediaOptions.FileInfos.Count > 1;
 
             if (_mediaOptions.FileInfos.Count > 1)
+            {
                 Title.Text = $"3CAT: {_mediaOptions.FileInfos.Last().ProgramName} ({_mediaOptions.FileInfos.Count})";
+                Select.Text = $"{Resources.Translations.Strings.Selected} ({_episodeSelector.CheckedIds.Count})";
+            }
             else
                 Title.Text = $"3CAT: {_mediaOptions.FileInfos.First().Title}";
 

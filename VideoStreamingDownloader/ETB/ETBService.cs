@@ -76,7 +76,7 @@ namespace VideoStreamingDownloader.ETB
         {
             string id = GetId(url);
             var res = await GetMultipleMediaResponse(_id);
-            return id;
+            return res.Slug;
         }
 
         internal async Task<Media.Options> GetMediaOptions()

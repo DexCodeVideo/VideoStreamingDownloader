@@ -10,7 +10,7 @@ namespace VideoStreamingDownloader.ETB
 {
     internal partial class Main : Form
     {
-        private ETBService _RTVEService;
+        private ETBService _ETBService;
         private Common.EpisodeSelector.Main _episodeSelector;
         private Media.Options _mediaOptions;
 
@@ -18,7 +18,7 @@ namespace VideoStreamingDownloader.ETB
         {
             InitializeComponent();
             SetText();
-            _RTVEService = RTVEService;
+            _ETBService = RTVEService;
             LoadImage.Visible = true;
         }
 
@@ -51,11 +51,12 @@ namespace VideoStreamingDownloader.ETB
 
         private async void Main_Load(object sender, System.EventArgs e)
         {
-            _mediaOptions = await _RTVEService.GetMediaOptions();
+            _mediaOptions = await _ETBService.GetMediaOptions();
             InitializeEpisodeSelector(_mediaOptions.FileInfos);
             if (_mediaOptions.FileInfos.Count > 1)
             {
                 Title.Text = $"ETB: {_mediaOptions.FileInfos.Last().ProgramName} ({_mediaOptions.FileInfos.Count})";
+                Select.Text = $"{Resources.Translations.Strings.Selected} ({_episodeSelector.CheckedIds.Count})";
                 Select.Enabled = true;
             }
             else
@@ -102,7 +103,7 @@ namespace VideoStreamingDownloader.ETB
 
             foreach (var episode in _mediaOptions.FileInfos)
             {
-                if(_episodeSelector.CheckedIds.Contains(episode.Id))
+                if (_episodeSelector.CheckedIds.Contains(episode.Id))
                     items.Add(new Item(video, audios, subtitles, episode));
             }
 
